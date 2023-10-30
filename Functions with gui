@@ -1,0 +1,94 @@
+global y
+y = 1
+#creates and sets the y value to be a pointer to the number of recipes u have
+global Recipecollection
+Recipecollection = {}
+#creates the dictionary
+import tkinter as tk
+from tkinter import StringVar
+
+def findname():
+  #finds the other information of the recipie you wish to view
+  home = tk.Tk()
+  rname = clicked.get()
+  for i in range(1,y):
+    if Recipecollection[i]["Name"] == rname:
+      lbd = tk.Label(home, text ="Name: " + Recipecollection[i]["Name"] + "\n" + "Ingredients: " + Recipecollection[i]["Ingredients"] + "\n" + "Method: " + Recipecollection[i]["Method"])
+      lbd.pack()
+
+def findspecificrecipe():
+  #creates a dropdown of all the recipes stored and gets your input from that list
+  global y
+  global Recipecollection
+  recipeview = tk.Tk()
+  recipeview.geometry("200x200")
+  options = []
+  for i in range(1,y):
+    options.append(Recipecollection[i]["Name"])
+  global clicked
+  clicked = StringVar() 
+  clicked.set( "Recipes")
+  drop = tk.OptionMenu( recipeview , clicked , *options ) 
+  drop.pack() 
+  button = tk.Button( recipeview , text = "Find Recipe" , command = findname )
+  button.pack()
+  recipeview.mainloop()
+
+def setrecipe():
+  #sets the inputs of name, ingredients and method then, adds to the nested dictionary
+  global Recipecollection
+  global y 
+  name = e1.get()
+  ingredients = e2.get()
+  method = e3.get()
+  Recipecollection[y] = {}
+  Recipecollection[y]["Name"] = name
+  Recipecollection[y]["Ingredients"] = ingredients
+  Recipecollection[y]["Method"] = method 
+  y += 1
+  
+def addrecipegui():
+  #gets the inputs for name, ingredients and method
+  inputs = tk.Tk()
+  inputs.geometry("200x200")
+  global e1
+  lb2 = tk.Label(inputs, text = "Name")
+  lb2.pack()
+  e1 = tk.Entry(inputs, bd = 5)
+  e1.pack()
+  global e2
+  lb3 = tk.Label(inputs, text = "Ingredients")
+  lb3.pack()
+  e2 = tk.Entry(inputs)
+  e2.pack()
+  global e3
+  lb4 = tk.Label(inputs, text = "Method")
+  lb4.pack()
+  e3 = tk.Entry(inputs)
+  e3.pack()
+  b2 = tk.Button(inputs, text = "Enter", command = setrecipe)
+  b2.pack()
+  inputs.mainloop()
+
+def viewallrecipes():
+  home = tk.Tk()
+  for i in range(1,y):
+      lbd = tk.Label(home, text ="Name: " + Recipecollection[i]["Name"] + "\n" + "Ingredients: " + Recipecollection[i]["Ingredients"] + "\n" + "Method: " + Recipecollection[i]["Method"])
+      lbd.pack()
+
+#creates a window
+root = tk.Tk()
+root.geometry("400x200")
+#asks you what you want to do and then opens a new window with whatever choice you want
+lb1 = tk.Label(text = "Hello and welcome to the recipe tool, just click on a button")
+lb1.pack()
+b1 = tk.Button(text = "Add recipe", command = addrecipegui)
+b1.pack()
+b2 = tk.Button(text = "Find recipe", command = findspecificrecipe)
+b2.pack()
+b3 = tk.Button(text = "View All Recipes", command = viewallrecipes)
+b3.pack()
+root.mainloop()
+
+
+  
